@@ -1,28 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import $ from 'jquery'
 import BarChart from './components/BarChart'
 function App() {
-  let [sequence, setSequence] = useState([[0, 0], [1, 1], [2, 2], [3, 3]])
-  let [seqInfo, setSeqInfo] = useState({ index: "0001", description: "Hillo", link: "http://oeis.org" })
+  let [sequence, setSequence] = useState([[0, 0]])
+  let [seqInfo, setSeqInfo] = useState({ index: "000000", description: "Loading...", link: "http://oeis.org" })
   // True if linear y scale, false if log y scale
   let [useLinear, setUseLinear] = useState(true)
   // let [sequence, setSequence] = useState([1,2,3,4,5])
 
-  function componentDidMount() {
+  useEffect( () => {
     fetchOEIS();
-  }
+  }, [])
 
   function toggleLinearLog() {
     if (useLinear) {
       setUseLinear(false);
-      console.log("Linear is", useLinear)
-
     } else {
       setUseLinear(true);
-      console.log("Linear is", useLinear)
-
     }
     return useLinear
   }
@@ -60,15 +56,12 @@ function App() {
     // Fetch a random OEIS sequence
     // Pad the beginning with zeros
     let seq: string = String(Math.floor(Math.random() * 340000)).padStart(6, '0');
-    console.log(`https://oeis.org/A${seq}/b${seq}.txt`);
     $.ajax({
-      url: `https://cors-anywhere.herokuapp.com/https://oeis.org/A${seq}/b${seq}.txt`,
+      url: `https://desolate-refuge-92417.herokuapp.com/https://oeis.org/A${seq}/b${seq}.txt`,
 
       dataType: "text",
       success: (function (data) {
         let text: string = data;
-        console.log("Hello")
-        console.log("hello", text)
 
         // Debugging: print data
         // console.log(text)
@@ -87,7 +80,7 @@ function App() {
         $.ajax({
           dataType: "text",
 
-          url: `https://cors-anywhere.herokuapp.com/https://oeis.org/search?q=id:A${seq}&fmt=text`,
+          url: `https://desolate-refuge-92417.herokuapp.com/https://oeis.org/search?q=id:A${seq}&fmt=text`,
           success: (function (data) {
           let arr : string = data.split('\n')
           for (let line of arr) {
@@ -104,7 +97,6 @@ function App() {
 
     })
   })
-
 
   }
 
