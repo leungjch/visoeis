@@ -58,8 +58,8 @@ function App() {
   // Fetch a random OEIS sequence
   // Pad the beginning with zeros
   let seq : string = String(Math.floor(Math.random()*340000)).padStart(6, '0');
-  console.log(`http://oeis.org/A${seq}/b${seq}.txt`);
-  $.get( `http://oeis.org/A${seq}/b${seq}.txt`, function( data ) {
+  console.log(`https://oeis.org/A${seq}/b${seq}.txt`);
+  $.get( `https://oeis.org/A${seq}/b${seq}.txt`, function( data ) {
     let text : string = data;
 
     // Debugging: print data
@@ -71,13 +71,13 @@ function App() {
   // If successful, go to the info page and fetch its description
   // Set set sequence info state
   .done(function() {
-    $.get( `http://oeis.org/search?q=id:A${seq}&fmt=text`, function( data ) {
+    $.get( `https://oeis.org/search?q=id:A${seq}&fmt=text`, function( data ) {
       let arr = data.split('\n')
       for (let line of arr) {
         // Get only the "%N" tag which is the description
         if (line.substring(0,2) === "%N")
         {
-          setSeqInfo({index:seq, link:`http://oeis.org/A${seq}`, description: line.substring(11)})
+          setSeqInfo({index:seq, link:`https://oeis.org/A${seq}`, description: line.substring(11)})
           console.log("desc", line)
           break;
         }
