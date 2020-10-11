@@ -8,11 +8,21 @@ function App() {
   // Parses and cleans the b-file .txt
   // Returns two lists xList and yList
   function parseData(text : string){
-    
-    let xList : number[];
-    let yList : number[]; 
+    let xList : bigint[] = [];
+    let yList : bigint[] = [];
 
-    return {x: xList, y: yList};
+    text.split('\n').forEach((line) => {
+      if (/^\d+$/.test(line[0])) {
+        let pair = line.split(" ");
+        console.log("x", parseInt(pair[0]), "y", parseInt(pair[1]));
+        xList.push(BigInt(pair[0]));
+        yList.push(BigInt(pair[1]));
+      }
+    });
+  
+
+
+    // return {x: xList, y: yList};
   }
   function fetchOEIS() {
   // Request data from OEIS
