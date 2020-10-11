@@ -2,7 +2,7 @@
 import * as d3 from 'd3';
 import React, { useRef, useEffect } from 'react';
 
-function BarChart({ width, height, data, useLinear }){
+function BarChart({ width, height, data, usingLinear }){
 
     // https://stackoverflow.com/a/23398499
     function getMinMaxOf2DIndex (arr, idx) {
@@ -22,7 +22,7 @@ function BarChart({ width, height, data, useLinear }){
 
     useEffect(() => {
         draw();
-    }, [data]);
+    }, [data, usingLinear]);
 
     const draw = () => {
 
@@ -31,11 +31,11 @@ function BarChart({ width, height, data, useLinear }){
         // Clear svg before drawing
         svg.selectAll("*").remove();
 
-        svg.append("rect")
-        .attr("width", "100%")
-        .attr("height", "100%")
-        .attr("fill", "pink")
-        .attr("rx", "2%")								// how much to round corners - to be transitioned below
+        // svg.append("rect")
+        // .attr("width", "100%")
+        // .attr("height", "100%")
+        // .attr("fill", "pink")
+        // .attr("rx", "2%")								// how much to round corners - to be transitioned below
      
         
         var selection = svg.selectAll("circle").remove().data(data);
@@ -52,12 +52,13 @@ function BarChart({ width, height, data, useLinear }){
                             .domain([xMinMax.min - 1, xMinMax.max + 1])
                             .range([20, width-20]);
 
-        if (useLinear) {
+        if (usingLinear) {
             var scaleY = d3.scaleLinear()
 
         }
         else {
             var scaleY = d3.scaleSymlog()
+            console.log("Used log scale")
         }
 
         scaleY.domain([yMinMax.min-avgY/10, yMinMax.max+avgY/10])

@@ -9,6 +9,18 @@ function App() {
   let [useLinear, setUseLinear] = useState(true)
   // let [sequence, setSequence] = useState([1,2,3,4,5])
 
+  function toggleLinearLog() {
+    if (useLinear) {
+      setUseLinear(false);
+      console.log("Linear is", useLinear)
+
+    } else {
+      setUseLinear(true);
+      console.log("Linear is", useLinear)
+
+    }
+    return useLinear
+  }
 
   // Parses and cleans the b-file .txt
   // Returns two lists xList and yList
@@ -58,8 +70,9 @@ function App() {
 
   return (
     <div className="App">
-      {sequence && <BarChart width={1500} height={900} data={sequence} useLinear = {useLinear}></BarChart>}
+      {sequence && <BarChart width={1500} height={900} data={sequence} usingLinear = {useLinear}></BarChart>}
       <button onClick={fetchOEIS}> New sequence! </button>
+      <button onClick={toggleLinearLog}> Linear/log scale </button>
 
     </div>
   );
