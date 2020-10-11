@@ -5,10 +5,11 @@ import $ from 'jquery'
 import BarChart from './components/BarChart'
 function App() {
   let [sequence, setSequence] = useState([[0,0],[1,1],[2,2],[3,3]])
-  let [seqInfo, setSetInfo] = useState({index:"0001", description:"Hillo", link:"http://oeis.org"})
+  let [seqInfo, setSeqInfo] = useState({index:"0001", description:"Hillo", link:"http://oeis.org"})
   // True if linear y scale, false if log y scale
   let [useLinear, setUseLinear] = useState(true)
   // let [sequence, setSequence] = useState([1,2,3,4,5])
+
 
   function toggleLinearLog() {
     if (useLinear) {
@@ -60,18 +61,38 @@ function App() {
   console.log(`http://oeis.org/A${seq}/b${seq}.txt`);
   $.get( `http://oeis.org/A${seq}/b${seq}.txt`, function( data ) {
     let text : string = data;
-    
+
     // Debugging: print data
     // console.log(text)
     // console.log(sequence)
     
     return parseData(text);
-  });
+  })
+  // If successful, go to the info page and fetch its description
+  // Set set sequence info state
+  .done(function() {
+    $.get( `http://oeis.org/search?q=id:A${seq}&fmt=text`, function( data ) {
+      let arr = data.split('\n')
+      for (let line of arr) {
+        // Get only the "%N" tag which is the description
+        if (line.substring(0,2) === "%N")
+        {
+          setSeqInfo({index:seq, link:`http://oeis.org/A${seq}`, description: line})
+          console.log("desc", line)
+          break;
+        }
+      }
+      
+  })})
+  // If failed, keep searching for another random sequence
+  .fail(function() {
+    fetchOEIS()
+  })
   }
 
   return (
     <div className="App">
-      <h1><a href={seqInfo.link}>{seqInfo.index}</a></h1> 
+      <h1><a href={seqInfo.link}>A{seqInfo.index}</a></h1> 
       <p>{seqInfo.description}</p>
       {sequence && <BarChart width={1500} height={900} data={sequence} usingLinear = {useLinear}></BarChart>}
       <button onClick={fetchOEIS}> New sequence! </button>
