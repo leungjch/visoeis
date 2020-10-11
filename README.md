@@ -4,4 +4,6 @@ Fetches integer sequences from the Online Encyclopedia of Integer Sequences (OEI
 
 Most of the sequences look like linear, logarithmic, or exponential functions, but every now and then you'll get something exotic looking!
 
-Each sequence entry in OEIS does have a "graph" feature, but I found that it's rather slow and is a raster image. A simple weekend project built with React. 
+Each sequence entry in OEIS does have a "graph" feature, but I found that it loads rather slowly, and it generates a raster image. Visoeis lets you find interesting sequences instantly. 
+
+A simple weekend project built with React. 

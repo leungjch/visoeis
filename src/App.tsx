@@ -77,7 +77,7 @@ function App() {
         // Get only the "%N" tag which is the description
         if (line.substring(0,2) === "%N")
         {
-          setSeqInfo({index:seq, link:`http://oeis.org/A${seq}`, description: line})
+          setSeqInfo({index:seq, link:`http://oeis.org/A${seq}`, description: line.substring(11)})
           console.log("desc", line)
           break;
         }
