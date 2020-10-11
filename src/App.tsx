@@ -5,6 +5,7 @@ import $ from 'jquery'
 import BarChart from './components/BarChart'
 function App() {
   let [sequence, setSequence] = useState([[0,0],[1,1],[2,2],[3,3]])
+  let [seqInfo, setSetInfo] = useState({index:"0001", description:"Hillo", link:"http://oeis.org"})
   // True if linear y scale, false if log y scale
   let [useLinear, setUseLinear] = useState(true)
   // let [sequence, setSequence] = useState([1,2,3,4,5])
@@ -70,6 +71,8 @@ function App() {
 
   return (
     <div className="App">
+      <h1><a href={seqInfo.link}>{seqInfo.index}</a></h1> 
+      <p>{seqInfo.description}</p>
       {sequence && <BarChart width={1500} height={900} data={sequence} usingLinear = {useLinear}></BarChart>}
       <button onClick={fetchOEIS}> New sequence! </button>
       <button onClick={toggleLinearLog}> Linear/log scale </button>
