@@ -4,15 +4,16 @@ import './App.css';
 import $ from 'jquery'
 import BarChart from './components/BarChart'
 function App() {
-  let [sequence, setSequence] = useState({x: [1,2,3], y:[1,2,3]})
+  let [sequence, setSequence] = useState([[0,0],[1,1],[2,2],[3,3]])
+  // True if linear y scale, false if log y scale
+  let [useLinear, setUseLinear] = useState(true)
   // let [sequence, setSequence] = useState([1,2,3,4,5])
 
 
   // Parses and cleans the b-file .txt
   // Returns two lists xList and yList
   function parseData(text : string){
-    let xList : number[] = [];
-    let yList : number[] = [];
+    let newSeq: number[][] = [];
 
     let arr = text.split('\n');
     for (let line of arr) {
@@ -22,32 +23,34 @@ function App() {
         
         let xVal : number = parseInt(pair[0]);
         let yVal : number = parseInt(pair[1]);
-        if (xList.length < 1000 && !(yVal === Infinity || xVal === Infinity))
+        // Check NaN 
+        if (newSeq.length < 2000 && !(yVal === Infinity || yVal === -Infinity ||
+                                      xVal === Infinity || xVal === -Infinity))
         {
-          xList.push(xVal);
-          yList.push(yVal);  
+          newSeq.push([xVal, yVal]);  
         }
         else {
           break;
         }
       }
     }
-    setSequence({x:xList, y:yList})
+    setSequence(newSeq)
 
-
-    return {x: xList, y: yList};
+    return newSeq;
   }
 
   function fetchOEIS() {
-  // Request data from OEIS
+
+  // Fetch a random OEIS sequence
   // Pad the beginning with zeros
   let seq : string = String(Math.floor(Math.random()*340000)).padStart(6, '0');
+  console.log(`http://oeis.org/A${seq}/b${seq}.txt`);
   $.get( `http://oeis.org/A${seq}/b${seq}.txt`, function( data ) {
     let text : string = data;
     
     // Debugging: print data
     // console.log(text)
-    console.log(sequence)
+    // console.log(sequence)
     
     return parseData(text);
   });
@@ -55,7 +58,7 @@ function App() {
 
   return (
     <div className="App">
-      {sequence && <BarChart width={1500} height={500} data={sequence.y}></BarChart>}
+      {sequence && <BarChart width={1500} height={900} data={sequence} useLinear = {useLinear}></BarChart>}
       <button onClick={fetchOEIS}> New sequence! </button>
 
     </div>
