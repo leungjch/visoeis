@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/visoeis/precache-manifest.9331cfcebbefb4aef72db70b02c626bf.js"
+  "/visoeis/precache-manifest.6b3d288a1290f6c50e0c26aa0308722b.js"
 );
 
 self.addEventListener('message', (event) => {
