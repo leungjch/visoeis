@@ -66,7 +66,7 @@ function App() {
         let xVal: number = parseInt(pair[0]);
         let yVal: number = parseInt(pair[1]);
         // Check NaN 
-        if (newSeq.length < 2000 && !(yVal === Infinity || yVal === -Infinity ||
+        if (newSeq.length < 10000 && !(yVal === Infinity || yVal === -Infinity ||
           xVal === Infinity || xVal === -Infinity)) {
           newSeq.push([xVal, yVal]);
         }
@@ -169,7 +169,7 @@ function App() {
                   style={{flex:1, margin:0}}
                   key={idx}
                   type="radio"
-                  variant="secondary"
+                  variant="primary"
                   name="radio"
                   value={radio.value}
                   checked={useLinear === radio.value}
@@ -184,14 +184,15 @@ function App() {
                   <Dropdown>
               <Dropdown.Toggle variant="info" 
                                 id="dropdown-basic"
-                                >
-                Dropdown Button
+                                className="btn-block" 
+                                style={{flex:1}}>
+                Interesting Sequences
               </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item onSelect={() => handleDropdown("000012")}>1</Dropdown.Item>
-                <Dropdown.Item onSelect={() => handleDropdown("005536")}>2</Dropdown.Item>
-                <Dropdown.Item onSelect={() => handleDropdown("283979")}>3</Dropdown.Item>
+              <Dropdown.Menu  className="btn-block"  style={{flex:1}}>
+                <Dropdown.Item onSelect={() => handleDropdown("229037")}>A229037</Dropdown.Item>
+                <Dropdown.Item onSelect={() => handleDropdown("005536")}>A005536</Dropdown.Item>
+                <Dropdown.Item onSelect={() => handleDropdown("283979")}>A283979</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>
@@ -202,8 +203,8 @@ function App() {
               <InputGroup className="mb-3">
 
                 <FormControl
-                  placeholder="Enter a sequence number"
-                  aria-label="Enter a sequence number"
+                  placeholder="Enter a sequence number (without A)"
+                  aria-label="Enter a sequence number (without A)"
                   onChange={e => setinputSeqID(e.target.value)}
                   aria-describedby="basic-addon2"
                 />
