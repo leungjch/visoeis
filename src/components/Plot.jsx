@@ -50,7 +50,7 @@ function Plot({ width, height, data, usingLinear }){
 
         var scaleX = d3.scaleLinear()
                             .domain([xMinMax.min - 1, xMinMax.max + 1])
-                            .range([55, width-50]);
+                            .range([105, width-50]);
 
         if (usingLinear) {
             var scaleY = d3.scaleLinear()
@@ -112,8 +112,8 @@ function Plot({ width, height, data, usingLinear }){
 
          svg.append("g")
         .attr("class", "axis y")
-        .attr("transform", "translate(50, 10)")
-        .call(yAxis.tickFormat(d3.format("0.1e")));
+        .attr("transform", "translate(100, 10)")
+        .call(yAxis.tickFormat(d3.format("~g")));
         
 
          }
