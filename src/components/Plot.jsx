@@ -1,8 +1,8 @@
-// BarChart.js
+// Plot.js
 import * as d3 from 'd3';
 import React, { useRef, useEffect } from 'react';
 
-function BarChart({ width, height, data, usingLinear }){
+function Plot({ width, height, data, usingLinear }){
 
     // https://stackoverflow.com/a/23398499
     function getMinMaxOf2DIndex (arr, idx) {
@@ -61,7 +61,7 @@ function BarChart({ width, height, data, usingLinear }){
         }
 
         scaleY.domain([yMinMax.min, yMinMax.max])
-        .range([height-35, 10]);
+        .range([height*5/6, 20]);
 
         // Add axes
         var xAxis = d3.axisBottom()
@@ -103,15 +103,16 @@ function BarChart({ width, height, data, usingLinear }){
         //         .attr("height", 0)
         //     .remove()
 
+        var xAxisTranslate = height*5/6 + 10;
 
         svg.append("g")
         .attr("class", "axis x")
-        .attr('transform', 'translate(5,520)')
+        .attr("transform", "translate(0, " + xAxisTranslate  +")")
         .call(xAxis)
 
          svg.append("g")
         .attr("class", "axis y")
-        .attr('transform', 'translate(' + 50 +',' + '0)')
+        .attr("transform", "translate(50, 10)")
         .call(yAxis.tickFormat(d3.format("0.1e")));
         
 
@@ -128,4 +129,4 @@ function BarChart({ width, height, data, usingLinear }){
 
 }
 
-export default BarChart;
+export default Plot;
