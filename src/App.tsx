@@ -1,19 +1,30 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery'
 import Button from 'react-bootstrap/Button';
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+
+
 
 import Plot from './components/Plot'
 function App() {
   let [sequence, setSequence] = useState([[0, 0]])
+  let [inputSeq, setInputSeq] = useState("")
+
   let [seqInfo, setSeqInfo] = useState({ index: "000000", description: "Loading...", link: "http://oeis.org" })
   // True if linear y scale, false if log y scale
   let [useLinear, setUseLinear] = useState(true)
   // let [sequence, setSequence] = useState([1,2,3,4,5])
 
-  useEffect( () => {
+  useEffect(() => {
     fetchOEIS();
   }, [])
 
@@ -26,6 +37,10 @@ function App() {
     return useLinear
   }
 
+  function afterSubmit(event: React.FormEvent<EventTarget>) {
+    event.preventDefault();
+    fetchOEIS("search");
+  }
   // Parses and cleans the b-file .txt
   // Returns two lists xList and yList
   function parseData(text: string) {
@@ -54,11 +69,19 @@ function App() {
     return newSeq;
   }
 
-  function fetchOEIS() {
+  function fetchOEIS(specifySequence: string = "random") {
+
 
     // Fetch a random OEIS sequence
     // Pad the beginning with zeros
-    let seq: string = String(Math.floor(Math.random() * 340000)).padStart(6, '0');
+    var seq: string;
+    if (specifySequence === "search") {
+      seq = inputSeq.padStart(6, '0');
+    }
+    else {
+      seq = String(Math.floor(Math.random() * 340000)).padStart(6, '0');
+    }
+
     $.ajax({
       url: `https://desolate-refuge-92417.herokuapp.com/https://oeis.org/A${seq}/b${seq}.txt`,
 
@@ -72,11 +95,11 @@ function App() {
 
         return parseData(text);
       }),
-      // error: (function () {
+      error: (function () {
         // If failed, keep searching for another random sequence
-        // fetchOEIS()
+        fetchOEIS()
 
-      // }),
+      }),
       // If successful, go to the info page and fetch its description
       // Set set sequence info state
       complete: (function () {
@@ -85,31 +108,82 @@ function App() {
 
           url: `https://desolate-refuge-92417.herokuapp.com/https://oeis.org/search?q=id:A${seq}&fmt=text`,
           success: (function (data) {
-          let arr : string = data.split('\n')
-          for (let line of arr) {
-            // Get only the "%N" tag which is the description
-            if (line.substring(0, 2) === "%N") {
-              setSeqInfo({ index: seq, link: `https://oeis.org/A${seq}`, description: line.substring(11) })
-              console.log("desc", line)
-              break;
+            let arr: string = data.split('\n')
+            for (let line of arr) {
+              // Get only the "%N" tag which is the description
+              if (line.substring(0, 2) === "%N") {
+                setSeqInfo({ index: seq, link: `https://oeis.org/A${seq}`, description: line.substring(11) })
+                console.log("desc", line)
+                break;
+              }
             }
-          }
 
+          })
         })
-      })
 
+      })
     })
-  })
 
   }
+
+  const radios = [
+    { name: 'Linear', value: true },
+    { name: 'Logarithmic', value: false },
+  ];
 
   return (
     <div className="App">
       <h1><a href={seqInfo.link}>A{seqInfo.index}</a></h1>
       <p>{seqInfo.description}</p>
-      {sequence && <Plot width={window.innerWidth/2} height={window.innerHeight*3/4} data={sequence} usingLinear={useLinear}></Plot>}
-      <Button variant="success" className="btn-success" onClick={fetchOEIS}> New sequence! </Button>
-      <button onClick={toggleLinearLog}> Linear/log scale </button>
+      {sequence && <Plot width={window.innerWidth / 2} height={window.innerHeight * 3 / 4} data={sequence} usingLinear={useLinear}></Plot>}
+
+      <Container fluid style={{ width: "50%" }}>
+        <Row>
+          <Col>
+
+            {/* Generate a new sequence */}
+            <Button variant="success" className="btn-block" onClick={() => fetchOEIS()}> New sequence! </Button>
+          </Col>
+          <Col>
+            {/* Toggle logarithmic/linear scale */}
+            <ButtonGroup toggle>
+              {radios.map((radio, idx) => (
+                <ToggleButton
+                  key={idx}
+                  type="radio"
+                  variant="secondary"
+                  name="radio"
+                  value={radio.value}
+                  checked={useLinear === radio.value}
+                  onChange={(e) => setUseLinear(!useLinear)}
+                >
+                  {radio.name}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <form onSubmit={afterSubmit}>
+              <InputGroup className="mb-3">
+
+                <FormControl
+                  placeholder="Enter a sequence number"
+                  aria-label="Enter a sequence number"
+                  onChange={e => setInputSeq(e.target.value)}
+                  aria-describedby="basic-addon2"
+                />
+                <InputGroup.Append>
+                  <Button variant="outline-secondary" type="submit">Search</Button>
+                </InputGroup.Append>
+              </InputGroup>
+
+            </form>
+          </Col>
+        </Row>
+
+      </Container>
 
     </div>
   );
