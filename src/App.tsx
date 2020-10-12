@@ -11,13 +11,14 @@ import FormControl from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 
 import Plot from './components/Plot'
 function App() {
-  let [sequence, setSequence] = useState([[0, 0]])
-  let [inputSeq, setInputSeq] = useState("")
+  let [sequence, setSequence] = useState([[0, 0]]) // Sequence Data
+  let [inputSeqID, setinputSeqID] = useState("") // Sequence info (link, description, index)
 
   let [seqInfo, setSeqInfo] = useState({ index: "000000", description: "Loading...", link: "http://oeis.org" })
   // True if linear y scale, false if log y scale
@@ -37,10 +38,20 @@ function App() {
     return useLinear
   }
 
+  // Triggers on submit form
   function afterSubmit(event: React.FormEvent<EventTarget>) {
     event.preventDefault();
     fetchOEIS("search");
   }
+
+  // Triggers on click on a dropdown item
+  function handleDropdown(eventKey : string) {
+    
+    setinputSeqID(eventKey);
+
+    fetchOEIS(eventKey);
+    
+  } 
   // Parses and cleans the b-file .txt
   // Returns two lists xList and yList
   function parseData(text: string) {
@@ -76,10 +87,13 @@ function App() {
     // Pad the beginning with zeros
     var seq: string;
     if (specifySequence === "search") {
-      seq = inputSeq.padStart(6, '0');
+      seq = inputSeqID.padStart(6, '0');
+    }
+    else if (specifySequence === "random") {
+      seq = String(Math.floor(Math.random() * 340000)).padStart(6, '0');
     }
     else {
-      seq = String(Math.floor(Math.random() * 340000)).padStart(6, '0');
+      seq = specifySequence;
     }
 
     $.ajax({
@@ -137,18 +151,22 @@ function App() {
       <p>{seqInfo.description}</p>
       {sequence && <Plot width={window.innerWidth / 2} height={window.innerHeight * 3 / 4} data={sequence} usingLinear={useLinear}></Plot>}
 
-      <Container fluid style={{ width: "50%" }}>
-        <Row>
-          <Col>
+
+
+
+      <Container fluid style={{ width: "50%", paddingLeft: 0, paddingRight: 0, marginBottom:10}}>
+        <Row style={{ paddingLeft: 0, paddingRight: 0, marginBottom:5 }}>
+          <Col style={{paddingLeft:0, paddingRight:0}}>
 
             {/* Generate a new sequence */}
             <Button variant="success" className="btn-block" onClick={() => fetchOEIS()}> New sequence! </Button>
           </Col>
-          <Col>
+          <Col style={{paddingLeft:1, paddingRight:0}}>
             {/* Toggle logarithmic/linear scale */}
-            <ButtonGroup toggle>
+            <ButtonGroup toggle style={{display:"flex"}}>
               {radios.map((radio, idx) => (
                 <ToggleButton
+                  style={{flex:1, margin:0}}
                   key={idx}
                   type="radio"
                   variant="secondary"
@@ -162,6 +180,21 @@ function App() {
               ))}
             </ButtonGroup>
           </Col>
+          <Col style={{paddingLeft:1, paddingRight:0}}>
+                  <Dropdown>
+              <Dropdown.Toggle variant="info" 
+                                id="dropdown-basic"
+                                >
+                Dropdown Button
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item onSelect={() => handleDropdown("000012")}>1</Dropdown.Item>
+                <Dropdown.Item onSelect={() => handleDropdown("005536")}>2</Dropdown.Item>
+                <Dropdown.Item onSelect={() => handleDropdown("283979")}>3</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
         </Row>
         <Row>
           <Col>
@@ -171,7 +204,7 @@ function App() {
                 <FormControl
                   placeholder="Enter a sequence number"
                   aria-label="Enter a sequence number"
-                  onChange={e => setInputSeq(e.target.value)}
+                  onChange={e => setinputSeqID(e.target.value)}
                   aria-describedby="basic-addon2"
                 />
                 <InputGroup.Append>
