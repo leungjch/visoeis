@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/visoeis/static/css/main.5f361e03.chunk.css",
-    "main.js": "/visoeis/static/js/main.cf429a32.chunk.js",
-    "main.js.map": "/visoeis/static/js/main.cf429a32.chunk.js.map",
+    "main.js": "/visoeis/static/js/main.10affdac.chunk.js",
+    "main.js.map": "/visoeis/static/js/main.10affdac.chunk.js.map",
     "runtime-main.js": "/visoeis/static/js/runtime-main.c30edb0f.js",
     "runtime-main.js.map": "/visoeis/static/js/runtime-main.c30edb0f.js.map",
-    "static/js/2.10646dad.chunk.js": "/visoeis/static/js/2.10646dad.chunk.js",
-    "static/js/2.10646dad.chunk.js.map": "/visoeis/static/js/2.10646dad.chunk.js.map",
+    "static/js/2.e1235954.chunk.js": "/visoeis/static/js/2.e1235954.chunk.js",
+    "static/js/2.e1235954.chunk.js.map": "/visoeis/static/js/2.e1235954.chunk.js.map",
     "index.html": "/visoeis/index.html",
-    "precache-manifest.942518bd2e384097f34f128c3198b7c3.js": "/visoeis/precache-manifest.942518bd2e384097f34f128c3198b7c3.js",
+    "precache-manifest.7dbbe0524f2866e343731a0b99883d1f.js": "/visoeis/precache-manifest.7dbbe0524f2866e343731a0b99883d1f.js",
     "service-worker.js": "/visoeis/service-worker.js",
     "static/css/main.5f361e03.chunk.css.map": "/visoeis/static/css/main.5f361e03.chunk.css.map",
-    "static/js/2.10646dad.chunk.js.LICENSE.txt": "/visoeis/static/js/2.10646dad.chunk.js.LICENSE.txt"
+    "static/js/2.e1235954.chunk.js.LICENSE.txt": "/visoeis/static/js/2.e1235954.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c30edb0f.js",
-    "static/js/2.10646dad.chunk.js",
+    "static/js/2.e1235954.chunk.js",
     "static/css/main.5f361e03.chunk.css",
-    "static/js/main.cf429a32.chunk.js"
+    "static/js/main.10affdac.chunk.js"
   ]
 }
