@@ -1,7 +1,10 @@
 import React, { useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
+
 import $ from 'jquery'
+import Button from 'react-bootstrap/Button';
+
 import Plot from './components/Plot'
 function App() {
   let [sequence, setSequence] = useState([[0, 0]])
@@ -105,7 +108,7 @@ function App() {
       <h1><a href={seqInfo.link}>A{seqInfo.index}</a></h1>
       <p>{seqInfo.description}</p>
       {sequence && <Plot width={window.innerWidth/2} height={window.innerHeight*3/4} data={sequence} usingLinear={useLinear}></Plot>}
-      <button onClick={fetchOEIS}> New sequence! </button>
+      <Button variant="success" className="btn-success" onClick={fetchOEIS}> New sequence! </Button>
       <button onClick={toggleLinearLog}> Linear/log scale </button>
 
     </div>

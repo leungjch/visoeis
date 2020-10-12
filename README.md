@@ -1,5 +1,5 @@
 
-# Viseois | Integer Sequence Visualization
+# Visoeis | Integer Sequence Visualization
 Fetches integer sequences from the Online Encyclopedia of Integer Sequences (OEIS) and plots them using D3.js. Options to view a specific sequence or fetch a random sequence, and to view in linear/logarithmic scale.
 
 Most of the sequences look like linear, logarithmic, or exponential functions, but every now and then you'll get something exotic looking!
