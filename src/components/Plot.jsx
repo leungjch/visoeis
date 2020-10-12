@@ -50,7 +50,7 @@ function BarChart({ width, height, data, usingLinear }){
 
         var scaleX = d3.scaleLinear()
                             .domain([xMinMax.min - 1, xMinMax.max + 1])
-                            .range([20, width-20]);
+                            .range([55, width-50]);
 
         if (usingLinear) {
             var scaleY = d3.scaleLinear()
@@ -58,11 +58,17 @@ function BarChart({ width, height, data, usingLinear }){
         }
         else {
             var scaleY = d3.scaleSymlog()
-            console.log("Used log scale")
         }
 
-        scaleY.domain([yMinMax.min-avgY/10, yMinMax.max+avgY/10])
-        .range([height-10, 10]);
+        scaleY.domain([yMinMax.min, yMinMax.max])
+        .range([height-35, 10]);
+
+        // Add axes
+        var xAxis = d3.axisBottom()
+                    .scale(scaleX);
+        var yAxis = d3.axisLeft()
+                    .scale(scaleY);
+
         
         // Draw lolipop lines
         // svg.selectAll("myline")
@@ -79,10 +85,15 @@ function BarChart({ width, height, data, usingLinear }){
         selection
         .data(data).enter()
         .append("circle")
+        .attr('transform', 'translate(' + 0 +',' + '0)')
+
         .attr("cx", function(d) {return scaleX(d[0])})
         .attr("cy", function(d) {return scaleY(d[1])})
         .attr("r", 5)
+        .attr("fill", "orange")
         
+
+
 
 
         // selection
@@ -92,12 +103,24 @@ function BarChart({ width, height, data, usingLinear }){
         //         .attr("height", 0)
         //     .remove()
 
+
+        svg.append("g")
+        .attr("class", "axis x")
+        .attr('transform', 'translate(5,520)')
+        .call(xAxis)
+
+         svg.append("g")
+        .attr("class", "axis y")
+        .attr('transform', 'translate(' + 50 +',' + '0)')
+        .call(yAxis.tickFormat(d3.format("0.1e")));
+        
+
          }
 
 
     return (
-        <div className="chart">
-            <svg ref={ref}>
+        <div className="chart" style={{padding:10}}>
+            <svg ref={ref} >
             </svg>
         </div>
         

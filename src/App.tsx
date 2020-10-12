@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import $ from 'jquery'
-import BarChart from './components/BarChart'
+import BarChart from './components/Plot'
 function App() {
   let [sequence, setSequence] = useState([[0, 0]])
   let [seqInfo, setSeqInfo] = useState({ index: "000000", description: "Loading...", link: "http://oeis.org" })
@@ -104,7 +104,7 @@ function App() {
     <div className="App">
       <h1><a href={seqInfo.link}>A{seqInfo.index}</a></h1>
       <p>{seqInfo.description}</p>
-      {sequence && <BarChart width={1500} height={900} data={sequence} usingLinear={useLinear}></BarChart>}
+      {sequence && <BarChart width={window.innerWidth/2} height={window.innerHeight*3/4} data={sequence} usingLinear={useLinear}></BarChart>}
       <button onClick={fetchOEIS}> New sequence! </button>
       <button onClick={toggleLinearLog}> Linear/log scale </button>
 
