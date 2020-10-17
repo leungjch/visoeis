@@ -23,7 +23,6 @@ function App() {
   let [seqInfo, setSeqInfo] = useState({ index: "000000", description: "Waking up server... Please wait a few seconds.", link: "http://oeis.org" })
   // True if linear y scale, false if log y scale
   let [useLinear, setUseLinear] = useState(true)
-  // let [sequence, setSequence] = useState([1,2,3,4,5])
 
   useEffect(() => {
     fetchOEIS();

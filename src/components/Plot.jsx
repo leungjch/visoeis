@@ -89,7 +89,7 @@ function Plot({ width, height, data, usingLinear }){
 
         .attr("cx", function(d) {return scaleX(d[0])})
         .attr("cy", function(d) {return scaleY(d[1])})
-        .attr("r", 5)
+        .attr("r", 2)
         .attr("fill", "orange")
         
 
