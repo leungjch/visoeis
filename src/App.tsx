@@ -189,7 +189,11 @@ function App() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu  className="btn-block"  style={{flex:1}}>
-                <Dropdown.Item onSelect={() => handleDropdown("229037")}>A229037</Dropdown.Item>
+              <Dropdown.Item onSelect={() => handleDropdown("063543")}>A063543</Dropdown.Item>
+              <Dropdown.Item onSelect={() => handleDropdown("279125")}>A279125</Dropdown.Item>
+              <Dropdown.Item onSelect={() => handleDropdown("265326")}>A265326</Dropdown.Item>
+              <Dropdown.Item onSelect={() => handleDropdown("117966")}>A117966</Dropdown.Item>
+                <Dropdown.Item onSelect={() => handleDropdown("080099")}>A080099</Dropdown.Item>
                 <Dropdown.Item onSelect={() => handleDropdown("005536")}>A005536</Dropdown.Item>
                 <Dropdown.Item onSelect={() => handleDropdown("283979")}>A283979</Dropdown.Item>
               </Dropdown.Menu>
