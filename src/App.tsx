@@ -146,7 +146,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1><a href={seqInfo.link}>A{seqInfo.index}</a></h1>
+      <h1 style={{padding:10}}><a href={seqInfo.link}>A{seqInfo.index}</a></h1>
       <p>{seqInfo.description}</p>
       {sequence && <Plot width={window.innerWidth / 2} height={window.innerHeight * 3 / 4} data={sequence} usingLinear={useLinear}></Plot>}
 
